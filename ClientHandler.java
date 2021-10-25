@@ -1,5 +1,5 @@
 public class CliengHandler extends Thread{
-		
+	//Added the ClientHandler Array for multiple clients	
 	public static CliengHandler[] arrayCC = new CliengHandler[0];
 	private Socket s;
 	private OutputStreamWriter osw;
@@ -9,7 +9,7 @@ public class CliengHandler extends Thread{
 			
 	public CliengHandler(Socket s) {
 		try {
-			//Como declarar CliengHandler: https://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
+			//How to declarate CliengHandler: https://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
 			this.s = s;
 			this.osw = new OutputStreamWriter(s.getOutputStream());
 			this.isr = new InputStreamReader(s.getInputStream());
