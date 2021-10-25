@@ -3,16 +3,16 @@ public class ServerReader extends Thread{
 	private Queue<String> queue;
 	private int queueSize;
 	
-	public LecturaServidor(InputStreamReader isr, Queue<String> queueIn,int queueSizeIn) {
+	public ServerReader(InputStreamReader isr, Queue<String> queueIn,int queueSizeIn) {
 		this.isr = isr;
 		this.queue = queueIn;
 		this.queueSize = queueSizeIn;
 	}
 	static void add_to_queue(String msg, Queue<String> queue, int queueSize){
 		synchronized(queue) {
-			if(queue.size() != queueSize) 
-				if(Integer.parseInt(msg.replace("Cliente: ", ""))%25 == 0) 
-					queue.add(msg.replace("Cliente: ", "") + " es divisible entre 25");
+			if(queue.size() != queueSize) {
+					queue.add(msg);
+			}
 		}
 	}
 	@Override
@@ -20,8 +20,10 @@ public class ServerReader extends Thread{
 		BufferedReader br = new BufferedReader(isr);
 		while(true) {
 			try {
-				String msg = br.readLine();
-				add_to_queue(msg, queue, queueSize);
+				String msg = Logic.msg_back(br.readLine());
+				//System.out.println(msg);
+				if(msg!=null&&msg.isEmpty()==false)
+					add_to_queue(msg, queue, queueSize);
 			} catch (IOException e) {e.printStackTrace();break;}
 		}	
 	}
