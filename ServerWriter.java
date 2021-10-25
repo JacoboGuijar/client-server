@@ -9,12 +9,14 @@ public class ServerWriter extends Thread{
         this.queueSize = queueSizeIn;
 
 	}
-	static void print_queue(Queue<String> queue){
+	static String print_queue(Queue<String> queue){
+		String to_print = null;
 		synchronized(queue) {
 			while(queue.isEmpty() == false) {
-				System.out.println(queue.remove());
+				to_print = queue.remove();
 			}
 		}
+		return to_print;
 	}
 	@Override
 	public void run() {
@@ -23,25 +25,32 @@ public class ServerWriter extends Thread{
 		BufferedWriter bw = new BufferedWriter(osw);
 		while(active) {
 			try {
-				print_queue(queue);
-				bw.write("Servidor: " + Integer.toString(n));
-				bw.newLine();
-				bw.flush();
+				String to_print = print_queue(queue);
+				if(to_print!=null && to_print.isEmpty()==false) {
+					bw.write(to_print);
+					bw.newLine();
+					bw.flush();
+				}
+				//bw.write("Servidor: " + Integer.toString(n));
+				//bw.newLine();
+				//bw.flush();
 				if(n==50)
 					n = 0;
 				n++;
 				
-				try{Thread.sleep(500);}catch(InterruptedException ex){ex.printStackTrace();}
+				try{Thread.sleep(100);}catch(InterruptedException ex){ex.printStackTrace();}
 			}catch(IOException e) {
 				try {
 					active = false;
 					if(bw != null) 
 						bw.close();
 					
-				}catch(IOException f) {e.printStackTrace();f.printStackTrace();}
-			}			
-			
+				}catch(IOException f) {
+					e.printStackTrace();
+					f.printStackTrace();
+					break;
+				}
+			}					
 		}
 	}
-	
 }
