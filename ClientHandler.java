@@ -59,7 +59,7 @@ public class ClientHandler extends Thread{
 	
 	@Override
 	public void run() {
-		int buffer = 10; //buffer 10 es una cifra puesta de prueba, todavía hay que estudiar el pleno comportamiento de la variable
+		int buffer = 10; //buffer 10 es una cifra arbitraria, todavía hay que estudiar el pleno comportamiento de la variable
 		Thread tWriter = new ServerWriter(osw, queue, buffer);
 		Thread tReader = new ServerReader(isr, queue, buffer);
 		tReader.start();
