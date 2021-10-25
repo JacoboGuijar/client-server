@@ -1,15 +1,15 @@
-public class CliengHandler extends Thread{
+public class ClientHandler extends Thread{
 	//Added the ClientHandler Array for multiple clients	
-	public static CliengHandler[] arrayCC = new CliengHandler[0];
+	public static ClientHandler[] arrayCC = new ClientHandler[0];
 	private Socket s;
 	private OutputStreamWriter osw;
 	private InputStreamReader isr;
 	//Consumer-producer example to share information between Threads: https://stackoverflow.com/a/44667033/12293801
 	private Queue<String> queue;
 			
-	public CliengHandler(Socket s) {
+	public ClientHandler(Socket s) {
 		try {
-			//How to declarate CliengHandler: https://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
+			//How to declarate ClientHandler: https://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
 			this.s = s;
 			this.osw = new OutputStreamWriter(s.getOutputStream());
 			this.isr = new InputStreamReader(s.getInputStream());
@@ -29,8 +29,8 @@ public class CliengHandler extends Thread{
 		}
 	}
 	
-	public CliengHandler[] addClient(CliengHandler [] arrayCC, CliengHandler cc) {
-		CliengHandler[] newArrayCC = new CliengHandler[arrayCC.length + 1];
+	public ClientHandler[] addClient(ClientHandler [] arrayCC, ClientHandler cc) {
+		ClientHandler[] newArrayCC = new ClientHandler[arrayCC.length + 1];
 		
 		for(int i = 0; i < arrayCC.length; i++) {
 			newArrayCC[i] = arrayCC[i];
@@ -40,8 +40,8 @@ public class CliengHandler extends Thread{
 		return newArrayCC;
 	}
 	
-	public CliengHandler[] rmvClient(CliengHandler [] arrayCC, CliengHandler cc) {
-		CliengHandler[] newArrayCC = new CliengHandler[arrayCC.length - 1];
+	public ClientHandler[] rmvClient(ClientHandler [] arrayCC, CliengHandler cc) {
+		ClientHandler[] newArrayCC = new ClientHandler[arrayCC.length - 1];
 		
 		for(int i = 0; i <arrayCC.length; i++) {
 			if(arrayCC[i] != cc) {
