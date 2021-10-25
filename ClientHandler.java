@@ -25,9 +25,9 @@ public class ClientHandler extends Thread{
 	public void run() {
 		
 		int buffer = 5;
-		Thread tEscritura = new EscrituraServidor(osw, queue, buffer);
-		Thread tLectura = new LecturaServidor(isr, queue, buffer);
-		tLectura.start();
-		tEscritura.start();
+		Thread tWriter = new ServerWriter(osw, queue, buffer);
+		Thread tReader = new ServerReader(isr, queue, buffer);
+		tReader.start();
+		tWriter.start();
 	}
 }
